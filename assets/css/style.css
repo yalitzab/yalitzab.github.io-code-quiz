@@ -1,0 +1,22 @@
+.highscore {
+    display: flexbox;
+    text-align: left;
+    
+}
+
+.timer{
+    text-align: right;
+}
+
+.container {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    margin: auto;
+    width: 900px;
+    
+    }
+
+.btn {
+    color: rgb(91, 3, 190);    
+      
+    }
