@@ -1,36 +1,30 @@
 var questionQuiz = document.getElementById("quiz");
 var questionSubmit = document.getElementById("results");
-var score = document.getElementById("score");
+//Creating these dynamically
+var theScore;
+var timerEl;
 var timer = document.getElementById("timer");
 var startbtn = document.getElementById("start");
 
-var timerEl = document.getElementById("time");
+
+var count = 0
 var score = 0;
-// var secondsLeft = 75;
+var time = 75;
 var currentQuestionIndex = 0;
 
 // variables to keep track of quiz state
 var timerId;
 
-function countdown() {
-    var timeLeft = 5;
-  
-    // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-    var timeInterval = setInterval(function() {
-      if (timeLeft > 1) {
-        timerEl.textContent = timeLeft + ' seconds remaining';
-        timeLeft--;
-      } else if (timeLeft === 1) {
-        timerEl.textContent = timeLeft + ' second remaining';
-        timeLeft--;
-      } else {
-        timerEl.textContent = '';
-        clearInterval(timeInterval);
-        displayMessage();
-      }
-    }, 1000);
-}
+// Start Game
+startbtn.addEventListener("click", function () {
+    startbtn.classList.add("hide")
+    getNewQuestion(currentQuestionIndex);
+    timerId = setInterval(clockTick, 1000);
+    answerClickSetUp();
+    // show starting time
+    timerEl.textContent = time + " seconds remaining";
 
+});
 
 
 
@@ -44,6 +38,11 @@ function goToNextQuestion(whatTheUserClicked) {
   }
   else {
     console.log("Sorry, that is not correct.");
+     // check if user guessed wrong
+  if (this.value !== questions[currentQuestionIndex].answer) {
+    // penalize time
+    time -= 30;
+    }
   }
   currentQuestionIndex++;
   getNewQuestion(currentQuestionIndex);
@@ -91,26 +90,6 @@ function answerClickSetUp() {
   c.addEventListener("click", function () { goToNextQuestion(c.innerText); });
   d.addEventListener("click", function () { goToNextQuestion(d.innerText); });
 }
-answerClickSetUp();
-
-startbtn.addEventListener("click", function () {
-  getNewQuestion(currentQuestionIndex);
-  timerId = setInterval(clockTick, 1000);
-  // show starting time
-  timerEl.textContent = time;
-  getQuestion();
-});
-
-function clockTick() {
-    // update time
-    timer--;
-    timerEl.textContent = time;
-  
-    // check if user ran out of time
-    if (time <= 0) {
-      quizEnd();
-    }
-  }
 
 var currentQuestion;
 function getNewQuestion(questionIndex) {
@@ -152,7 +131,58 @@ function getNewQuestion(questionIndex) {
 
 //submitAnswer.addEventListener("click", quizTime);
 function scoreKeeper(){
-  document.getElementById("score").innerHTML = count++;
+    //Creating our score
+    var scoreEl = document.createElement("h3");
+    scoreEl.textContent = `View Highscore ${score}`
+    scoreEl.setAttribute("id", "score")
+    var element=document.getElementById("header");
+    element.appendChild(scoreEl);
 
+    //Dynamically adding the html to variable
+    theScore = document.getElementById("score")
+
+    //Creating our timer
+    var timerElem = document.createElement("h4");
+    timerElem.textContent = "Time: "
+    timerElem.setAttribute("id","timer")
+    var timeEl = document.createElement("span");
+    timeEl.textContent = score
+    timeEl.setAttribute("id","time")
+    timerElem.appendChild(timeEl)
+
+    var element = document.getElementById("header");
+    element.appendChild(timerElem);
+
+    //Dynamically adding the html to variable
+    timerEl = document.getElementById("time");
 }
 scoreKeeper();
+
+function quizEnd(){
+    console.log("Its over")
+    // stop timer
+  clearInterval(timerId);
+
+  // hide questions
+  questionQuiz.setAttribute("class", "hide");
+}
+
+function clockTick() {
+    // update time
+    timerEl.textContent = time;
+    if (time > 1) {
+        timerEl.textContent = time + ' seconds remaining';
+        time--;
+      } else if (time === 1) {
+        timerEl.textContent = time + ' second remaining';
+        time--;
+      } else {
+        timerEl.textContent = '';
+        clearInterval(timerId);
+        // displayMessage();
+      }
+    // out of time
+    if (time <= 0) {
+      quizEnd();
+    }
+  }

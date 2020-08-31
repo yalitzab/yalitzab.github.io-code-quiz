@@ -8,6 +8,10 @@
     text-align: right;
 }
 
+.h1 {
+    font: bold;
+}
+
 .container {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-align: center;
@@ -17,6 +21,13 @@
     }
 
 .btn {
-    color: rgb(91, 3, 190);    
-      
+    background-color: rgb(3, 190, 165);    
+    color: black;
+    border: 1px solid rgb(2, 128, 111);
+    border-radius: 5px;
+    padding: 5px   
     }
+
+.btn:hover {
+    border-color: black;
+}
