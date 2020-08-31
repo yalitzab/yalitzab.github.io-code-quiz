@@ -26,8 +26,6 @@ startbtn.addEventListener("click", function () {
 
 });
 
-
-
 // whatTheUserClicked = a string ""
 function goToNextQuestion(whatTheUserClicked) {
   var correctText = questions[currentQuestionIndex].answer;
@@ -137,6 +135,7 @@ function scoreKeeper(){
     scoreEl.setAttribute("id", "score")
     var element=document.getElementById("header");
     element.appendChild(scoreEl);
+    
 
     //Dynamically adding the html to variable
     theScore = document.getElementById("score")
@@ -186,3 +185,4 @@ function clockTick() {
       quizEnd();
     }
   }
+

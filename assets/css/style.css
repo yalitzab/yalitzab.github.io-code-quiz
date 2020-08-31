@@ -31,3 +31,9 @@
 .btn:hover {
     border-color: black;
 }
+
+/* Highscore  */
+.highscore {
+    display: inline;
+    text-align: left;
+}
